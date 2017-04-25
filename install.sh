@@ -70,9 +70,6 @@ echo "Set a fast keyboard repeat rate, after a good initial delay."
 run defaults write NSGlobalDomain KeyRepeat -int 1
 run defaults write NSGlobalDomain InitialKeyRepeat -int 25
 
-echo "Disable auto-correct."
-run defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-
 echo "Speed up mission control animations."
 run defaults write com.apple.dock expose-animation-duration -float 0.1
 
@@ -88,15 +85,6 @@ run defaults write com.apple.screencapture type -string png
 echo "Save screenshots to user screenshots directory instead of desktop."
 run mkdir ~/screenshots
 run defaults write com.apple.screencapture location -string ~/screenshots
-
-echo "Disable menu transparency."
-run defaults write com.apple.universalaccess reduceTransparency -int 1
-
-echo "Increase contrast."
-run defaults write com.apple.universalaccess increaseContrast -int 1
-
-echo "Disable mouse enlargement with jiggle."
-run defaults write ~/Library/Preferences/.GlobalPreferences CGDisableCursorLocationMagnification -bool true
 
 echo "Disable annoying UI error sounds."
 run defaults write com.apple.systemsound com.apple.sound.beep.volume -int 0
@@ -130,66 +118,6 @@ run defaults write DSDontWriteNetworkStores com.apple.desktopservices -int 1
 
 echo "Don't ask to use external drives as a Time Machine backup."
 run defaults write DoNotOfferNewDisksForBackup com.apple.TimeMachine -int 1
-
-echo "Disable natural scrolling."
-run defaults write ~/Library/Preferences/.GlobalPreferences com.apple.swipescrolldirection -bool false
-
-# Security And Privacy Improvements
-echo "Disable Safari from auto-filling sensitive data."
-run defaults write ~/Library/Preferences/com.apple.Safari AutoFillCreditCardData -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari AutoFillFromAddressBook -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari AutoFillMiscellaneousForms -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari AutoFillPasswords -bool false
-
-echo "Disable Safari from automatically opening files."
-run defaults write ~/Library/Preferences/com.apple.Safari AutoOpenSafeDownloads -bool false
-
-echo "Always block cookies and local storage in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari BlockStoragePolicy -bool false
-
-echo "Enable Safari warnings when visiting fradulent websites."
-run defaults write ~/Library/Preferences/com.apple.Safari WarnAboutFraudulentWebsites -bool true
-
-echo "Disable javascript in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptEnabled -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari WebKitJavaScriptEnabled -bool false
-
-echo "Block popups in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
-
-echo "Disable plugins and extensions in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2WebGLEnabled -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari WebKitPluginsEnabled -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari ExtensionsEnabled -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari PlugInFirstVisitPolicy PlugInPolicyBlock
-run defaults write ~/Library/Preferences/com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
-run defaults write ~/Library/Preferences/com.apple.Safari WebKitJavaEnabled -bool false
-
-echo "Safari should treat SHA-1 certificates as insecure."
-run defaults write ~/Library/Preferences/com.apple.Safari TreatSHA1CertificatesAsInsecure -bool true
-
-echo "Disable pre-loading websites with high search rankings."
-run defaults write ~/Library/Preferences/com.apple.Safari PreloadTopHit -bool false
-
-echo "Disable Safari search engine suggestions."
-run defaults write ~/Library/Preferences/com.apple.Safari SuppressSearchSuggestions -bool true
-
-echo "Enable Do-Not-Track HTTP header in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari SendDoNotTrackHTTPHeader -bool true
-
-echo "Disable pdf viewing in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari WebKitOmitPDFSupport -bool true
-
-echo "Display full website addresses in Safari."
-run defaults write ~/Library/Preferences/com.apple.Safari ShowFullURLInSmartSearchField -bool true
-
-echo "Disable loading remote content in emails in Apple Mail."
-run defaults write ~/Library/Preferences/com.apple.mail-shared DisableURLLoading -bool true
-
-echo "Send junk mail to the junk mail box in Apple Mail."
-run defaults write ~/Library/Containers/com.apple.mail/Data/Library/Preferences/com.apple.mail JunkMailBehavior -int 2
 
 echo "Disable spotlight universal search (don't send info to Apple)."
 run defaults write com.apple.safari UniversalSearchEnabled -int 0
@@ -267,16 +195,6 @@ echo "Install youtube-dl."
 run brew install youtube-dl
 run brew install ffmpeg
 
-# Trust a curl | bash? Why not.
-echo "Install rust using Rustup."
-rustc --version
-if [[ $? != 0 ]] ; then
-    run curl https://sh.rustup.rs -sSf | sh
-fi
-
-echo "Install rustfmt."
-run cargo install rustfmt
-
 # Install all the Mac App Store applications using mas. https://github.com/mas-cli/mas
 mac_app_login=$(mas account | grep @)
 if [ -z "$mac_app_login" ] ; then
@@ -284,21 +202,6 @@ if [ -z "$mac_app_login" ] ; then
     read mac_app_login
     run mas signin $mac_app_login
 fi
-
-echo "Install Reeder."
-run mas install 880001334
-
-echo "Install Final Cut Pro."
-run mas install 424389933
-
-echo "Install Keynote."
-run mas install 409183694
-
-echo "Install Things."
-run mas install 407951449
-
-echo "Install Slack."
-run mas install 803453959
 
 echo "Upgrade any Mac App Store applications."
 run mas upgrade
